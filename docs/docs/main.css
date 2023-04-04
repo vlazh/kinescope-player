@@ -1,0 +1,33 @@
+body {
+  padding: 0;
+}
+
+code {
+  vertical-align: middle;
+}
+
+aside {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  height: 100%;
+  width: 30em;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  overflow-x: hidden;
+  padding: 2em 1em 2em 2em;
+  border-right: 1px solid grey;
+}
+
+aside nav {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+main {
+  margin-left: 30em;
+  padding: 2em;
+}
