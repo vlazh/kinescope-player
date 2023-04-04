@@ -1,0 +1,292 @@
+{
+  "exportFormatVersion": 2,
+  "containerVersion": {
+    "accountId": "1000000000",
+    "containerId": "10000000",
+    "containerVersionId": "0",
+    "container": {
+      "accountId": "1000000000",
+      "containerId": "10000000",
+      "name": "kinescope",
+      "usageContext": ["WEB"]
+    },
+    "tag": [
+      {
+        "accountId": "1000000000",
+        "containerId": "10000000",
+        "tagId": "100",
+        "name": "GA4 – Event – Kinescope Video",
+        "type": "gaawe",
+        "parameter": [
+          {
+            "type": "TEMPLATE",
+            "key": "eventName",
+            "value": "{{Event Action}}"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "measurementId",
+            "value": "{{GA Measurement ID}}"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "measurementIdOverride",
+            "value": "{{GA Measurement ID}}"
+          }
+        ],
+        "firingTriggerId": ["1000"],
+        "parentFolderId": "10",
+        "tagFiringOption": "ONCE_PER_EVENT",
+        "monitoringMetadata": {
+          "type": "MAP"
+        }
+      }
+    ],
+    "trigger": [
+      {
+        "accountId": "1000000000",
+        "containerId": "10000000",
+        "triggerId": "1000",
+        "name": "Kinescope Video Interaction GA4",
+        "type": "CUSTOM_EVENT",
+        "customEventFilter": [
+          {
+            "type": "EQUALS",
+            "parameter": [
+              {
+                "type": "TEMPLATE",
+                "key": "arg0",
+                "value": "{{_event}}"
+              },
+              {
+                "type": "TEMPLATE",
+                "key": "arg1",
+                "value": "kinescope.video"
+              }
+            ]
+          }
+        ],
+        "filter": [
+          {
+            "type": "MATCH_REGEX",
+            "parameter": [
+              {
+                "type": "TEMPLATE",
+                "key": "arg0",
+                "value": "{{GA Measurement ID}}"
+              },
+              {
+                "type": "TEMPLATE",
+                "key": "arg1",
+                "value": "(^$|^(G|AW)-[A-Z0-9]+)"
+              }
+            ]
+          }
+        ],
+        "parentFolderId": "10"
+      }
+    ],
+    "variable": [
+      {
+        "accountId": "1000000000",
+        "containerId": "10000000",
+        "variableId": "10001",
+        "name": "Video ID",
+        "type": "v",
+        "parameter": [
+          {
+            "type": "INTEGER",
+            "key": "dataLayerVersion",
+            "value": "2"
+          },
+          {
+            "type": "BOOLEAN",
+            "key": "setDefaultValue",
+            "value": "false"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "name",
+            "value": "kinescope.videoId"
+          }
+        ],
+        "parentFolderId": "10",
+        "formatValue": {}
+      },
+      {
+        "accountId": "1000000000",
+        "containerId": "10000000",
+        "variableId": "10002",
+        "name": "External ID",
+        "type": "v",
+        "parameter": [
+          {
+            "type": "INTEGER",
+            "key": "dataLayerVersion",
+            "value": "2"
+          },
+          {
+            "type": "BOOLEAN",
+            "key": "setDefaultValue",
+            "value": "false"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "name",
+            "value": "kinescope.externalId"
+          }
+        ],
+        "parentFolderId": "10",
+        "formatValue": {}
+      },
+      {
+        "accountId": "1000000000",
+        "containerId": "10000000",
+        "variableId": "10003",
+        "name": "Event Action",
+        "type": "v",
+        "parameter": [
+          {
+            "type": "INTEGER",
+            "key": "dataLayerVersion",
+            "value": "2"
+          },
+          {
+            "type": "BOOLEAN",
+            "key": "setDefaultValue",
+            "value": "false"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "name",
+            "value": "kinescope.eventAction"
+          }
+        ],
+        "parentFolderId": "10",
+        "formatValue": {}
+      },
+      {
+        "accountId": "1000000000",
+        "containerId": "10000000",
+        "variableId": "10004",
+        "name": "Video Seconds Played",
+        "type": "v",
+        "parameter": [
+          {
+            "type": "INTEGER",
+            "key": "dataLayerVersion",
+            "value": "2"
+          },
+          {
+            "type": "BOOLEAN",
+            "key": "setDefaultValue",
+            "value": "false"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "name",
+            "value": "kinescope.videoSecondsPlayed"
+          }
+        ],
+        "parentFolderId": "10",
+        "formatValue": {}
+      },
+      {
+        "accountId": "1000000000",
+        "containerId": "10000000",
+        "variableId": "10005",
+        "name": "GA Measurement ID",
+        "type": "v",
+        "parameter": [
+          {
+            "type": "INTEGER",
+            "key": "dataLayerVersion",
+            "value": "2"
+          },
+          {
+            "type": "BOOLEAN",
+            "key": "setDefaultValue",
+            "value": "true"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "defaultValue"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "name",
+            "value": "kinescope.ga.measurementId"
+          }
+        ],
+        "parentFolderId": "10",
+        "formatValue": {}
+      },
+      {
+        "accountId": "1000000000",
+        "containerId": "10000000",
+        "variableId": "10006",
+        "name": "Event Category",
+        "type": "v",
+        "parameter": [
+          {
+            "type": "INTEGER",
+            "key": "dataLayerVersion",
+            "value": "2"
+          },
+          {
+            "type": "BOOLEAN",
+            "key": "setDefaultValue",
+            "value": "false"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "name",
+            "value": "kinescope.eventCategory"
+          }
+        ],
+        "parentFolderId": "10",
+        "formatValue": {}
+      }
+    ],
+    "folder": [
+      {
+        "accountId": "1000000000",
+        "containerId": "10000000",
+        "folderId": "10",
+        "name": "Kinescope"
+      }
+    ],
+    "builtInVariable": [
+      {
+        "accountId": "1000000000",
+        "containerId": "10000000",
+        "type": "VIDEO_URL",
+        "name": "Video URL"
+      },
+      {
+        "accountId": "1000000000",
+        "containerId": "10000000",
+        "type": "VIDEO_TITLE",
+        "name": "Video Title"
+      },
+      {
+        "accountId": "1000000000",
+        "containerId": "10000000",
+        "type": "VIDEO_DURATION",
+        "name": "Video Duration"
+      },
+      {
+        "accountId": "1000000000",
+        "containerId": "10000000",
+        "type": "VIDEO_PERCENT",
+        "name": "Video Percent"
+      },
+      {
+        "accountId": "1000000000",
+        "containerId": "10000000",
+        "type": "VIDEO_CURRENT_TIME",
+        "name": "Video Current Time"
+      }
+    ]
+  }
+}

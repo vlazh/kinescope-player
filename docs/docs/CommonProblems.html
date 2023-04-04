@@ -1,0 +1,160 @@
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <link
+      rel="shortcut icon"
+      href="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+      type="image/x-icon"
+    />
+    <link rel="stylesheet" href="main.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/sindresorhus/github-markdown-css/github-markdown-light.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/styles/github.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+    <script src="main.js"></script>
+  </head>
+  <body class="hidden">
+    <div id="translateTest"></div>
+
+    <div class="topbar">
+      <div>v2.154.10</div>
+      <div class="languages notranslate">
+        <div class="lang" data-glang="ru">RU</div>
+        <div class="lang" data-glang="en">EN</div>
+      </div>
+    </div>
+
+    <div class="page markdown-body">
+      <aside>
+        <nav><h3 id="kinescope-player-version">Kinescope Player (v2.154.10)</h3>
+<ul>
+<li><a href="index.html">Начало</a></li>
+<li><a href="embed/index.html">Встраивание плеера</a><ul>
+<li><a href="iframe/IframeRegular.html">Простое встраивание через &lt;iframe&gt;</a></li>
+<li><a href="iframe/IframeApi.html">Встраивание с помощью IFrame API (для разработчиков)</a><ul>
+<li><a href="iframe/IframePlayerFactory.html">Создание плеера</a></li>
+<li><a href="iframe/IframePlayerApi.html">Управление плеером</a></li>
+<li><a href="iframe/IframePlayerApiLoader.html">Загрузчик IFrame API и TypeScript типы</a><!-- - [Простое встраивание с помощью IFrame API без создания плеера](./iframe/IframePlayerFactory.auto.md) -->
+  <!-- - [Widget (beta)](./widget.md) --></li>
+</ul>
+</li>
+<li><a href="elements/index.html">Пользовательские элементы (Custom Elements)</a><ul>
+<li><a href="elements/KinescopeIframePlayer.html">&lt;kinescope-iframe-player&gt;</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="optimization.html">Оптимизация, отложенная загрузка и автозапуск</a></li>
+<li><a href="playlists.html">Плейлисты</a></li>
+<li><a href="cta.html">CTA (beta)</a></li>
+<li><a href="ga.html">Google Analytics (beta)</a></li>
+<li><a href="CommonProblems.html">Возможные проблемы и их решения</a></li>
+<li><a href="CHANGELOG.html">Изменения</a></li>
+<li><a href="help.html"><strong>Помощь</strong></a></li>
+</ul>
+<!-- - [Поддерживаемые платформы](./SupportedPlatforms.md) -->
+</nav>
+      </aside>
+
+      <div class="delimiter"></div>
+
+      <main><h2 id="возможные-проблемы-и-их-решения">Возможные проблемы и их решения</h2>
+<h4 id="не-загружается-видео-или-зависает">Не загружается видео или зависает</h4>
+<ul>
+<li>Проверьте скорость интернета с помощью <a href="https://speedtest.kinescope.io/">Скоростомера</a>.</li>
+<li>Закройте в браузере все вкладки, кроме плеера. Перезагрузите страницу.</li>
+</ul>
+<h4 id="при-включенной-защите-widevine-drm-есть-возможность-записывать-видео-с-экрана">При включенной защите (Widevine DRM) есть возможность записывать видео с экрана</h4>
+<p>Такое возможно если один из родительских элементов, куда встраивается плеер, имеет скругления (<code>border-radius</code>). Для таких случаев решением, на данный момент, является указание css стилей элементу со скруглениями: <code>overflow: &#39;initial&#39; или &#39;visible&#39;</code>.<br>Так же, запись экрана может быть возможна, если на странице используются css свойства <code>backdrop-filter</code>, <code>filter</code> - <a href="https://issues.chromium.org/issues/362007492">https://issues.chromium.org/issues/362007492</a>.</p>
+<h4 id="не-работает-widevine-drm-в-webview-на-android">Не работает Widevine DRM в WebView на Android</h4>
+<p>В WebView проверить поддержку DRM через <a href="https://shaka-player-demo.appspot.com/support.html">https://shaka-player-demo.appspot.com/support.html</a>. Если <code>null</code>, то нет поддержки.</p>
+<p>Возможные решения:</p>
+<ul>
+<li><a href="https://github.com/videojs/video.js/issues/5563">https://github.com/videojs/video.js/issues/5563</a></li>
+<li><a href="https://stackoverflow.com/questions/47626857/how-to-play-widevine-drm-content-in-android-webview">https://stackoverflow.com/questions/47626857/how-to-play-widevine-drm-content-in-android-webview</a></li>
+<li><a href="https://stackoverflow.com/questions/53143363/how-to-enable-protected-content-in-a-webview">https://stackoverflow.com/questions/53143363/how-to-enable-protected-content-in-a-webview</a></li>
+</ul>
+<h4 id="не-запускается-плеер-при-нажатии-на-свою-кнопку-не-плеера-и-вызове-api-play">Не запускается плеер при нажатии на свою кнопку (не плеера) и вызове API play()</h4>
+<p>Это ограничения браузера (<a href="https://developer.chrome.com/blog/autoplay">https://developer.chrome.com/blog/autoplay</a>).<br>Необходимо чтобы пользователь нажал на плеер, а не на вашу кнопку. Для этого, чтобы нажатие проходило как бы сквозь вашу кнопку и происходило на плеере, можно кнопке (или другим элементам над плеером) установить css стиль <code>pointer-events: none</code>.</p>
+<h4 id="зависает-страница-с-большим-количеством-плееров">Зависает страница с большим количеством плееров</h4>
+<p>См. раздел <a href="./optimization.html">Оптимизация</a>.</p>
+<h4 id="ошибка-notallowederror-при-вызове-методов-api">Ошибка NotAllowedError при вызове методов API</h4>
+<p>Если текст ошибки &quot;The request is not allowed by the user agent ...&quot;, &quot;The request is not triggered by a user activation&quot;, то скорее всего, это связано с тем, что вызывается системное апи браузера, которое требует действий пользователя до этого или может запускаться только как прямой результат нажатия или прикосновения пользователя к элементу страницы плеера.<br>Подробнее: <a href="https://developer.mozilla.org/en-US/docs/Web/Security/User_activation">https://developer.mozilla.org/en-US/docs/Web/Security/User_activation</a></p>
+<!--
+В браузере должна быть поддержка минимум es2015.
+-->
+
+<!--
+Автозапуск
+https://www.chromium.org/audio-video/autoplay/autoplay-pre-seeding-in-chrome/
+https://developer.apple.com/documentation/webkit/delivering_video_content_for_safari#3030251
+-->
+
+<!--
+Если iframe встроен в iframe
+
+Не работает полноэкранный режим
+
+Если родительский iframe заполнен не через атрибут `src` (например, как target формы, содержимое записано напрямую),
+то атрибут `allow` работает по особенному (или не работает).
+Нужно у iframe плеера убрать атрибут `allow` и оставить только атрибут `allowfullscreen`.
+Подсмотрено у гугловских фреймов. Почему так, неизвестно, может ошибка хромиума.
+-->
+
+<!--
+Если не работает widevine в webview на android.
+
+В webview можно проверить поддержку
+https://shaka-player-demo.appspot.com/support.html
+Если null, то нет поддержки.
+
+Возможные решения:
+https://github.com/videojs/video.js/issues/5563
+https://stackoverflow.com/questions/47626857/how-to-play-widevine-drm-content-in-android-webview
+https://stackoverflow.com/questions/53143363/how-to-enable-protected-content-in-a-webview
+-->
+
+<!--
+Если не работает автозапуск на Electron.
+https://github.com/mykle1/MMM-ISS-Live/issues/1
+https://github.com/apache/cordova-electron/issues/102
+-->
+
+<!--
+Если не работает DRM на Electron.
+https://www.electronjs.org/docs/latest/tutorial/testing-widevine-cdm
+https://www.radiantmediaplayer.com/guides/working-with-electron-and-dash-with-widevine-drm.html
+https://www.radiantmediaplayer.com/docs/latest/dash-drm-documentation.html
+При ошибке DRM в Electron: Failed to execute 'createMediaKeys' on 'MediaKeySystemAccess': MediaDrmBridge creation failed
+  Не решение, просто есть такая ошибка. https://coder.social/castlabs/electron-releases/issues/132
+-->
+
+<!--
+Если поверх iframe свои элементы, по клику на которые нужно запустить плеер (посредством апи),
+но бразер запрещает (Safari, например).
+
+Возможные решения:
+Чтобы клик проходил сквозь верхние элементы и происходил на фрейме.
+Для этого на верхних элеменах установить css pointer-events: none.
+-->
+
+<!--
+Если не работает поворот экрана в PWA в полноэкранном режиме.
+
+Возможные решения:
+Удалить из manifest.json свойство "ориентация", чтобы небыло ограничения для приложения.
+Слушать событие плеера на изменение полноэкранного режима и делать блокировку/разблокировку поворотов:
+  // для блокировки портретной
+  screen.orientation.lock("portrait");
+  // и затем разрешить любую
+  screen.orientation.unlock();
+-->
+</main>
+    </div>
+  </body>
+</html>

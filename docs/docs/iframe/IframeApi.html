@@ -1,0 +1,125 @@
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <link
+      rel="shortcut icon"
+      href="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+      type="image/x-icon"
+    />
+    <link rel="stylesheet" href="../main.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/sindresorhus/github-markdown-css/github-markdown-light.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/styles/github.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+    <script src="../main.js"></script>
+  </head>
+  <body class="hidden">
+    <div id="translateTest"></div>
+
+    <div class="topbar">
+      <div>v2.154.10</div>
+      <div class="languages notranslate">
+        <div class="lang" data-glang="ru">RU</div>
+        <div class="lang" data-glang="en">EN</div>
+      </div>
+    </div>
+
+    <div class="page markdown-body">
+      <aside>
+        <nav><h3 id="kinescope-player-version">Kinescope Player (v2.154.10)</h3>
+<ul>
+<li><a href="../index.html">Начало</a></li>
+<li><a href="../embed/index.html">Встраивание плеера</a><ul>
+<li><a href="../iframe/IframeRegular.html">Простое встраивание через &lt;iframe&gt;</a></li>
+<li><a href="../iframe/IframeApi.html">Встраивание с помощью IFrame API (для разработчиков)</a><ul>
+<li><a href="../iframe/IframePlayerFactory.html">Создание плеера</a></li>
+<li><a href="../iframe/IframePlayerApi.html">Управление плеером</a></li>
+<li><a href="../iframe/IframePlayerApiLoader.html">Загрузчик IFrame API и TypeScript типы</a><!-- - [Простое встраивание с помощью IFrame API без создания плеера](./iframe/IframePlayerFactory.auto.md) -->
+  <!-- - [Widget (beta)](./widget.md) --></li>
+</ul>
+</li>
+<li><a href="../elements/index.html">Пользовательские элементы (Custom Elements)</a><ul>
+<li><a href="../elements/KinescopeIframePlayer.html">&lt;kinescope-iframe-player&gt;</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="../optimization.html">Оптимизация, отложенная загрузка и автозапуск</a></li>
+<li><a href="../playlists.html">Плейлисты</a></li>
+<li><a href="../cta.html">CTA (beta)</a></li>
+<li><a href="../ga.html">Google Analytics (beta)</a></li>
+<li><a href="../CommonProblems.html">Возможные проблемы и их решения</a></li>
+<li><a href="../CHANGELOG.html">Изменения</a></li>
+<li><a href="../help.html"><strong>Помощь</strong></a></li>
+</ul>
+<!-- - [Поддерживаемые платформы](./SupportedPlatforms.md) -->
+</nav>
+      </aside>
+
+      <div class="delimiter"></div>
+
+      <main><h1 id="встраивание-с-помощью-iframe-api">Встраивание с помощью IFrame API</h1>
+<blockquote>
+<p>Этот вид встраивания плеера для разработчиков.</p>
+</blockquote>
+<!-- Для работы плеера требуется веб-браузер с поддержкой ES2015. -->
+<p>Для использования IFrame Player API необходимо реализовать на веб-странице следующую функцию JavaScript:</p>
+<ul>
+<li><code>onKinescopeIframeAPIReady(playerFactory: IframePlayerFactory)</code> – API автоматически вызовет эту функцию, когда IFrame Player API будет загружено и готово к использованию. Эта функция должна быть объявлена до загрузки скрипта IFrame Player API. В качестве параметра в функцию передается <a href="./IframePlayerFactory.html">объект для создания плеера</a>.</li>
+</ul>
+<h3 id="пример-2">Пример</h3>
+<pre><code class="hljs language-html"><span class="hljs-meta">&lt;!doctype <span class="hljs-keyword">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>
+    <span class="hljs-comment">&lt;!-- 1. Плеер заменит &lt;div&gt; на &lt;iframe&gt;. --&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;player&quot;</span> <span class="hljs-attr">class</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-comment">&lt;!-- Чтобы применить к &lt;iframe&gt; свои стили и/или атрибуты используйте тег &lt;iframe&gt;: --&gt;</span>
+    <span class="hljs-comment">&lt;!-- &lt;iframe id=&quot;player&quot; class=&quot;some-class&quot; someattr=&quot;some value&quot;&gt;&lt;/iframe&gt; --&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript">
+      <span class="hljs-comment">// 2. Этот код асинхронно загрузит IFrame Player API (скрипт IFrame Player API).</span>
+      <span class="hljs-keyword">var</span> tag = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">createElement</span>(<span class="hljs-string">&#x27;script&#x27;</span>);
+      tag.<span class="hljs-property">src</span> = <span class="hljs-string">&#x27;https://player.kinescope.io/latest/iframe.player.js&#x27;</span>;
+      <span class="hljs-keyword">var</span> firstScriptTag = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementsByTagName</span>(<span class="hljs-string">&#x27;script&#x27;</span>)[<span class="hljs-number">0</span>];
+      firstScriptTag.<span class="hljs-property">parentNode</span>.<span class="hljs-title function_">insertBefore</span>(tag, firstScriptTag);
+
+      <span class="hljs-comment">// 3. Эта функция создаст &lt;iframe&gt; (и Kinescope Player).</span>
+      <span class="hljs-comment">//    Она будет вызвана автоматически когда скрипт API будет загружен.</span>
+      <span class="hljs-keyword">function</span> <span class="hljs-title function_">onKinescopeIframeAPIReady</span>(<span class="hljs-params">playerFactory</span>) {
+        playerFactory
+          .<span class="hljs-title function_">create</span>(<span class="hljs-string">&#x27;player&#x27;</span>, {
+            <span class="hljs-attr">url</span>: <span class="hljs-string">&#x27;https://kinescope.io/1111111&#x27;</span>,
+            <span class="hljs-attr">size</span>: { <span class="hljs-attr">width</span>: <span class="hljs-string">&#x27;50%&#x27;</span>, <span class="hljs-attr">height</span>: <span class="hljs-number">400</span> },
+          })
+          .<span class="hljs-title function_">then</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params">player</span>) {
+            player
+              <span class="hljs-comment">// 4. Этот обработчик будет вызван когда плеер загрузит необходимые данные для воспроизведения.</span>
+              .<span class="hljs-title function_">once</span>(player.<span class="hljs-property">Events</span>.<span class="hljs-property">Ready</span>, <span class="hljs-keyword">function</span> (<span class="hljs-params">event</span>) {
+                event.<span class="hljs-property">target</span>.<span class="hljs-title function_">setVolume</span>(<span class="hljs-number">0.5</span>);
+              })
+              <span class="hljs-comment">// 5. Этот обработчик будет вызван когда начнется воспроизведение.</span>
+              <span class="hljs-comment">//    Плеер проиграет 5 сек. и затем должен остановиться.</span>
+              .<span class="hljs-title function_">on</span>(player.<span class="hljs-property">Events</span>.<span class="hljs-property">Playing</span>, <span class="hljs-keyword">function</span> (<span class="hljs-params">event</span>) {
+                <span class="hljs-built_in">setTimeout</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) {
+                  event.<span class="hljs-property">target</span>.<span class="hljs-title function_">pause</span>();
+                }, <span class="hljs-number">5000</span>);
+              });
+          });
+      }
+    </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span>
+</code></pre><h2 id="см-так-же-2">См. так же</h2>
+<ul>
+<li><a href="./IframePlayerFactory.html">Создание плеера</a></li>
+<li><a href="./IframePlayerApi.html">Управление плеером</a></li>
+</ul>
+</main>
+    </div>
+  </body>
+</html>

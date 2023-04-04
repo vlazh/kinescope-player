@@ -1,0 +1,266 @@
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <link
+      rel="shortcut icon"
+      href="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+      type="image/x-icon"
+    />
+    <link rel="stylesheet" href="../main.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/sindresorhus/github-markdown-css/github-markdown-light.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/styles/github.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+    <script src="../main.js"></script>
+  </head>
+  <body class="hidden">
+    <div id="translateTest"></div>
+
+    <div class="topbar">
+      <div>v2.154.10</div>
+      <div class="languages notranslate">
+        <div class="lang" data-glang="ru">RU</div>
+        <div class="lang" data-glang="en">EN</div>
+      </div>
+    </div>
+
+    <div class="page markdown-body">
+      <aside>
+        <nav><h3 id="kinescope-player-version">Kinescope Player (v2.154.10)</h3>
+<ul>
+<li><a href="../index.html">Начало</a></li>
+<li><a href="../embed/index.html">Встраивание плеера</a><ul>
+<li><a href="../iframe/IframeRegular.html">Простое встраивание через &lt;iframe&gt;</a></li>
+<li><a href="../iframe/IframeApi.html">Встраивание с помощью IFrame API (для разработчиков)</a><ul>
+<li><a href="../iframe/IframePlayerFactory.html">Создание плеера</a></li>
+<li><a href="../iframe/IframePlayerApi.html">Управление плеером</a></li>
+<li><a href="../iframe/IframePlayerApiLoader.html">Загрузчик IFrame API и TypeScript типы</a><!-- - [Простое встраивание с помощью IFrame API без создания плеера](./iframe/IframePlayerFactory.auto.md) -->
+  <!-- - [Widget (beta)](./widget.md) --></li>
+</ul>
+</li>
+<li><a href="../elements/index.html">Пользовательские элементы (Custom Elements)</a><ul>
+<li><a href="../elements/KinescopeIframePlayer.html">&lt;kinescope-iframe-player&gt;</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="../optimization.html">Оптимизация, отложенная загрузка и автозапуск</a></li>
+<li><a href="../playlists.html">Плейлисты</a></li>
+<li><a href="../cta.html">CTA (beta)</a></li>
+<li><a href="../ga.html">Google Analytics (beta)</a></li>
+<li><a href="../CommonProblems.html">Возможные проблемы и их решения</a></li>
+<li><a href="../CHANGELOG.html">Изменения</a></li>
+<li><a href="../help.html"><strong>Помощь</strong></a></li>
+</ul>
+<!-- - [Поддерживаемые платформы](./SupportedPlatforms.md) -->
+</nav>
+      </aside>
+
+      <div class="delimiter"></div>
+
+      <main><h1 id="простое-встраивание-через-iframe">Простое встраивание через &lt;iframe&gt;</h1>
+<p>Помимо простого встраивания через &lt;iframe&gt; с указанием URL-адреса видеоролика или плейлиста есть возможность добавить некоторые функциональные возможности в плеер, добавив параметры в конец URL-адреса в коде для встраивания. Параметры URL начинаются с вопросительного знака (?). Например:</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&lt;<span class="hljs-name">iframe</span>
+  <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://kinescope.io/embed/123456789?параметр=значение&quot;</span>
+  <span class="hljs-attr">width</span>=<span class="hljs-string">&quot;640&quot;</span>
+  <span class="hljs-attr">height</span>=<span class="hljs-string">&quot;360&quot;</span>
+  <span class="hljs-attr">frameborder</span>=<span class="hljs-string">&quot;0&quot;</span>
+  <span class="hljs-attr">allow</span>=<span class="hljs-string">&quot;autoplay; fullscreen; picture-in-picture; encrypted-media; gyroscope; accelerometer; clipboard-write; screen-wake-lock;&quot;</span>
+&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">iframe</span>&gt;</span>
+</code></pre><blockquote>
+<p>Атрибут <code>allow</code> позволяет плееру использовать автозапуск, полноэкранный режим, картинку в картинке, проигрывать зашифрованное видео и т.д.<br>Он обязателен для полноценной работы плеера.</p>
+</blockquote>
+<blockquote>
+<p>Чтобы указать несколько параметров необходимо между ними вставить символ <code>&amp;</code>, например:<br><code>https://kinescope.io/embed/123456789?autoplay=1&amp;loop=1</code></p>
+</blockquote>
+<blockquote>
+<p>Если используется атрибут <code>sandbox</code> (не рекомендуется), то для него необходимо указать значения <code>allow-same-origin allow-scripts allow-popups allow-popups-to-escape-sandbox allow-presentation</code>.</p>
+</blockquote>
+<p><strong>Поддерживаемые параметры:</strong></p>
+<table>
+<thead>
+<tr>
+<th align="left">Параметр</th>
+<th align="left">Поддерживаемые значения</th>
+<th align="left">Описание</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong><code>autofocus</code></strong></td>
+<td align="left"><code>true</code>/<code>false</code> или <code>1</code>/<code>0</code></td>
+<td align="left">Передать фокус плееру.</td>
+</tr>
+<tr>
+<td align="left"><strong><code>autoplay</code></strong></td>
+<td align="left"><code>true</code>/<code>false</code> или <code>1</code>/<code>0</code></td>
+<td align="left">Запускать ли ролик автоматически после загрузки плеера. Если не удалось начать воспроизведение со звуком, то плеер попытается начать воспроизведение с выключенным звуком.</td>
+</tr>
+<tr>
+<td align="left"><strong><code>autopause</code></strong></td>
+<td align="left"><code>true</code>/<code>false</code> или <code>1</code>/<code>0</code></td>
+<td align="left">Ставить на паузу, если другой плеер на странице начал проигрывание.</td>
+</tr>
+<tr>
+<td align="left"><strong><code>muted</code></strong></td>
+<td align="left"><code>true</code>/<code>false</code> или <code>1</code>/<code>0</code></td>
+<td align="left">Выключить звук.</td>
+</tr>
+<tr>
+<td align="left"><strong><code>loop</code></strong></td>
+<td align="left"><code>true</code>/<code>false</code> или <code>1</code>/<code>0</code></td>
+<td align="left">Зацикленное видео.</td>
+</tr>
+<tr>
+<td align="left"><strong><code>playsinline</code></strong></td>
+<td align="left"><code>true</code>/<code>false</code> или <code>1</code>/<code>0</code></td>
+<td align="left">Воспроизводить видео на мобильных устройствах не переходя автоматически в полноэкранный режим.</td>
+</tr>
+<tr>
+<td align="left"><strong><code>preload</code></strong></td>
+<td align="left"><code>true</code>/<code>false</code> или <code>1</code>/<code>0</code></td>
+<td align="left">Предзагрузка видео. <code>false</code> - не осуществлять предзагрузку видео (только постер, экономия ресурсов страницы). <code>true</code> - предварительно загружаются необходимые данные видео.</td>
+</tr>
+<tr>
+<td align="left"><strong><code>background</code></strong></td>
+<td align="left"><code>true</code>/<code>false</code> или <code>1</code>/<code>0</code></td>
+<td align="left">Отключает все элементы управления, устанавливает <code>autoplay</code>, <code>muted</code>, <code>loop</code> в <code>true</code></td>
+</tr>
+<tr>
+<td align="left"><strong><code>t</code></strong></td>
+<td align="left"><code>number</code></td>
+<td align="left">Время с которого начинается проигрывание видео (сек).</td>
+</tr>
+<tr>
+<td align="left"><strong><code>quality</code></strong></td>
+<td align="left"><a href="../VideoQuality.html"><code>VideoQuality</code></a></td>
+<td align="left">Выбрать указанное качество видео.</td>
+</tr>
+<tr>
+<td align="left"><strong><code>audiotrack</code></strong></td>
+<td align="left"><code>string</code></td>
+<td align="left">Включить аудио дорожку с указанным языком. <code>@experimental</code></td>
+</tr>
+<tr>
+<td align="left"><strong><code>texttrack</code></strong></td>
+<td align="left"><code>true</code>/<code>false</code> или <code>1</code>/<code>0</code> или <code>string</code></td>
+<td align="left">Включить субтитры с указанным языком.<br> - <code>true</code> - автовыбор в следующем порядке: на языке браузера, на языке плеера, первый в списке.<br> - <code>string</code> - включать дорожку с указанным языком.</td>
+</tr>
+<tr>
+<td align="left"><strong><code>transparent</code></strong></td>
+<td align="left"><code>true</code>/<code>false</code> или <code>1</code>/<code>0</code></td>
+<td align="left">Прозрачный фон плеера.</td>
+</tr>
+<tr>
+<td align="left"><strong><code>title</code></strong></td>
+<td align="left"><code>true</code>/<code>false</code> или <code>1</code>/<code>0</code></td>
+<td align="left">Показывать ли заголовок, подзаголовок.</td>
+</tr>
+<tr>
+<td align="left"><strong><code>controls</code></strong></td>
+<td align="left"><code>true</code>/<code>false</code> или <code>1</code>/<code>0</code></td>
+<td align="left">Показывать ли элементы управления плеером.</td>
+</tr>
+<tr>
+<td align="left"><strong><code>no_poster</code></strong></td>
+<td align="left"><code>1</code>/<code>0</code></td>
+<td align="left">Не показывать постер.</td>
+</tr>
+<tr>
+<td align="left"><strong><code>keyboard</code></strong></td>
+<td align="left"><code>true</code>/<code>false</code> или <code>1</code>/<code>0</code></td>
+<td align="left">Управление плеером с клавиатуры.</td>
+</tr>
+<tr>
+<td align="left"><strong><code>speedbtn</code></strong></td>
+<td align="left"><code>true</code>/<code>false</code> или <code>1</code>/<code>0</code></td>
+<td align="left">Показывать ли кнопку выбора скорости воспроизведения.</td>
+</tr>
+<tr>
+<td align="left"><strong><code>notifications</code></strong></td>
+<td align="left"><code>true</code>/<code>false</code> или <code>1</code>/<code>0</code></td>
+<td align="left">Показывать ли уведомления в плеере (проблемы с интернетом, ошибки, хромкаст-подключение и т.д.). <code>@experimental</code></td>
+</tr>
+<tr>
+<td align="left"><strong><code>watermark</code></strong></td>
+<td align="left"><code>string</code></td>
+<td align="left">Текст водяного знака. Функциональность водяного знака включается в панели управления. Без включения функциональности параметр игнорируется.</td>
+</tr>
+<tr>
+<td align="left"><strong><code>dnt</code></strong></td>
+<td align="left"><code>true</code>/<code>false</code> или <code>1</code>/<code>0</code></td>
+<td align="left">Отключить отслеживание действий пользователя, отправку метрик и т.п.</td>
+</tr>
+<tr>
+<td align="left"><strong><code>drmauthtoken</code></strong></td>
+<td align="left"><code>string</code></td>
+<td align="left">Пользовательский токен для авторизации при запросе лицензии.</td>
+</tr>
+<tr>
+<td align="left"><strong><code>adtagurl</code></strong></td>
+<td align="left"><code>string</code></td>
+<td align="left">Ссылка на тег рекламы.</td>
+</tr>
+<tr>
+<td align="left"><strong><code>externalid</code></strong></td>
+<td align="left"><code>string</code></td>
+<td align="left">Какой-либо пользовательский идентификатор. Используется для отправки метрик.</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Для параметров, которые принимают значения <code>true</code>/<code>false</code>, эквивалентны значения <code>1</code>/<code>0</code>.<br>Например: <code>https://kinescope.io/embed/123456789?autoplay=true</code> эквивалентно <code>https://kinescope.io/embed/123456789?autoplay=1</code>.</p>
+</blockquote>
+<blockquote>
+<p>Для параметров, которые принимают значение <code>true</code>, отсутствие значения трактуется как <code>true</code>.<br>Например: <code>https://kinescope.io/embed/123456789?autoplay</code> эквивалентно <code>https://kinescope.io/embed/123456789?autoplay=true</code>.</p>
+</blockquote>
+<h2 id="отложенная-загрузка">Отложенная загрузка</h2>
+<p>Пока iframe находится вне зоны видимости, где-то глубоко внизу страницы, можно отложить его загрузку, чтобы сократить нагрузку на страницу и увеличить быстродействие.</p>
+<p>Для отложенной загрузки iframe укажите атрибут <code>loading=&quot;lazy&quot;</code>:</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&lt;<span class="hljs-name">iframe</span> <span class="hljs-attr">loading</span>=<span class="hljs-string">&quot;lazy&quot;</span> <span class="hljs-attr">...</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">iframe</span>&gt;</span>
+</code></pre><h2 id="примеры-встраивания">Примеры встраивания</h2>
+<h3 id="адаптивный-размер-плеера-responsive">Адаптивный размер плеера (responsive)<a name="responsive_example"></a></h3>
+<p><em>Плеер подстраивается под ширину контейнера.</em></p>
+<p>Поместите код примера в ваш контейнер. При необходимости изменяйте код на ваше усмотрение, это лишь пример.</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&lt;<span class="hljs-name">style</span>&gt;</span><span class="language-css">
+  <span class="hljs-selector-class">.kin-player-embed-container</span> {
+    <span class="hljs-attribute">position</span>: relative;
+    <span class="hljs-attribute">padding-bottom</span>: <span class="hljs-number">56.25%</span>;
+    <span class="hljs-attribute">height</span>: <span class="hljs-number">0</span>;
+    <span class="hljs-attribute">max-width</span>: <span class="hljs-number">100%</span>;
+    <span class="hljs-attribute">overflow</span>: hidden;
+  }
+  <span class="hljs-selector-class">.kin-player-embed-container</span> <span class="hljs-selector-tag">iframe</span> {
+    <span class="hljs-attribute">position</span>: absolute;
+    <span class="hljs-attribute">top</span>: <span class="hljs-number">0</span>;
+    <span class="hljs-attribute">left</span>: <span class="hljs-number">0</span>;
+    <span class="hljs-attribute">width</span>: <span class="hljs-number">100%</span>;
+    <span class="hljs-attribute">height</span>: <span class="hljs-number">100%</span>;
+  }
+</span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;kin-player-embed-container&quot;</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">iframe</span>
+    <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://kinescope.io/embed/123456789&quot;</span>
+    <span class="hljs-attr">frameborder</span>=<span class="hljs-string">&quot;0&quot;</span>
+    <span class="hljs-attr">allow</span>=<span class="hljs-string">&quot;autoplay; fullscreen; picture-in-picture; encrypted-media; gyroscope; accelerometer; clipboard-write; screen-wake-lock;&quot;</span>
+  &gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">iframe</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</code></pre><h3 id="фиксированный-размер-видео">Фиксированный размер видео<a name="fixed_example"></a></h3>
+<pre><code class="hljs language-html"><span class="hljs-tag">&lt;<span class="hljs-name">iframe</span>
+  <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://kinescope.io/embed/123456789&quot;</span>
+  <span class="hljs-attr">width</span>=<span class="hljs-string">&quot;640&quot;</span>
+  <span class="hljs-attr">height</span>=<span class="hljs-string">&quot;360&quot;</span>
+  <span class="hljs-attr">frameborder</span>=<span class="hljs-string">&quot;0&quot;</span>
+  <span class="hljs-attr">allow</span>=<span class="hljs-string">&quot;autoplay; fullscreen; picture-in-picture; encrypted-media; gyroscope; accelerometer; clipboard-write; screen-wake-lock;&quot;</span>
+&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">iframe</span>&gt;</span>
+</code></pre><h2 id="см-так-же-6">См. так же</h2>
+<ul>
+<li><a href="../playlists.html">Плейлисты</a></li>
+</ul>
+</main>
+    </div>
+  </body>
+</html>
