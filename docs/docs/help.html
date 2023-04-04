@@ -1,0 +1,70 @@
+<html>
+    <head>
+      <meta charset="utf-8" />
+      <link rel="stylesheet" href="main.css" />
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/sindresorhus/github-markdown-css/github-markdown-light.css">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/styles/github.min.css">
+    </head>
+    <body class="markdown-body"><h1 id="если-проблемаошибка">Если проблема/ошибка</h1>
+<p>В случае возникновения проблемы/ошибки необходимо выполнить следующие действия:</p>
+<ul>
+<li>Убедиться, что проблема точно с плеером, а не с вашим кодом/приложением.</li>
+<li>Кратко описать суть и необходимые <strong>минимальные</strong> действия для воспроизведения проблемы.</li>
+<li>Приложить (после возникновения проблемы):<ul>
+<li>Системный журнал плеера - из контекстного меню плеера (правой кнопкой мыши или длинный тап).</li>
+<li>Сообщения с консоли браузера (F12).</li>
+</ul>
+</li>
+</ul>
+<p><strong>Для разработчиков:</strong></p>
+<ul>
+<li>Сделать <strong>минимальный</strong> пример с воспроизведением проблемы на <a href="https://codesandbox.io">codesandbox</a> или т.п.</li>
+</ul>
+<!--
+Если iframe встроен в iframe
+
+Не работает полноэкранный режим
+
+Если родительский iframe заполнен не через атрибут `src` (например, как target формы, содержимое записано напрямую),
+то атрибут `allow` работает по особенному (или не работает).
+Нужно у iframe плеера убрать атрибут `allow` и оставить только атрибут `allowfullscreen`.
+Подсмотрено у гугловских фреймов. Почему так, неизвестно, может ошибка хромиума.
+-->
+
+<!--
+Если не работает widevine в webview на android.
+
+В webview можно проверить поддержку
+https://shaka-player-demo.appspot.com/support.html
+Если null, то нет поддержки.
+
+Возможные решения:
+https://github.com/videojs/video.js/issues/5563
+https://stackoverflow.com/questions/47626857/how-to-play-widevine-drm-content-in-android-webview
+https://stackoverflow.com/questions/53143363/how-to-enable-protected-content-in-a-webview
+-->
+
+<!--
+Если не работает автозапуск на Electron.
+https://github.com/mykle1/MMM-ISS-Live/issues/1
+https://github.com/apache/cordova-electron/issues/102
+-->
+
+<!--
+Если не работает DRM на Electron.
+https://www.electronjs.org/docs/latest/tutorial/testing-widevine-cdm
+https://www.radiantmediaplayer.com/guides/working-with-electron-and-dash-with-widevine-drm.html
+https://www.radiantmediaplayer.com/docs/latest/dash-drm-documentation.html
+При ошибке DRM в Electron: Failed to execute 'createMediaKeys' on 'MediaKeySystemAccess': MediaDrmBridge creation failed
+  Не решение, просто есть такая ошибка. https://coder.social/castlabs/electron-releases/issues/132
+-->
+
+<!--
+Если поверх iframe свои элементы, по клику на которые нужна запустить плеере (посредством апи),
+но бразер запрещает (Safari, например).
+
+Возможные решения:
+Чтобы клик проходил сквозь верхние элементы и происходил на фрейме.
+Для этого на верхних элеменах установить css pointer-events: none.
+-->
+</body></html>

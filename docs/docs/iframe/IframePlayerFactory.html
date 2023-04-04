@@ -1,0 +1,121 @@
+<html>
+    <head>
+      <meta charset="utf-8" />
+      <link rel="stylesheet" href="../main.css" />
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/sindresorhus/github-markdown-css/github-markdown-light.css">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/styles/github.min.css">
+    </head>
+    <body class="markdown-body"><h1 id="создание-плеера">Создание плеера</h1>
+<p>Для создания плеера используется объект (фабрика) со следующими свойствами и методами:</p>
+<h3 id="свойства-1">Свойства</h3>
+<ul>
+<li><code>Events: IframePlayerApi.Events</code> - <a href="./IframePlayerApi.html#EventData">Перечисление событий плеера</a>.</li>
+</ul>
+<h3 id="методы-1">Методы</h3>
+<ul>
+<li><p><strong><code>create(elementId: string, options: CreateOptions): Promise&lt;IframePlayerApi&gt;</code></strong> <a name="create"></a></p>
+<p>Создать плеер. Если элемент с id <code>elementId</code> не является <code>&lt;iframe&gt;</code>, то этот элемент будет заменен на элемент <code>&lt;iframe&gt;</code>, иначе будет использован указанный элемент <code>&lt;iframe&gt;</code> для встраивания плеера. Вторым аргументом передается объект с <a href="#CreateOptions">параметрами плеера</a>. Возвращается <code>Promise</code> с плеером (<a href="player-api">объект управления плеером</a>).<br>Если плеер с указанным id уже существует, то вернется экземпляр уже существующего плеера.</p>
+<blockquote>
+<p>После создания плеера нельзя самостоятельно удалять элемент с id <code>elementId</code> или изменять url <code>&lt;iframe&gt;</code>. Для удаления плеера используйте метод <a href="player-api"><code>destroy</code></a>.</p>
+<p>При пересоздании плеера необходимо дождаться завершения выполнения метода <a href="player-api"><code>destroy</code></a> (элемент с id <code>elementId</code> будет удален из DOM), затем самостоятельно создать элемент с id <code>elementId</code> и только после этого вызвать метод <code>create</code>.</p>
+</blockquote>
+<p><strong>Параметры плеера</strong><a name="CreateOptions" /></p>
+<pre><code class="hljs language-ts"><span class="hljs-keyword">interface</span> <span class="hljs-title class_">CreateOptions</span> {
+  <span class="hljs-comment">/** Url видео */</span>
+  <span class="hljs-attr">url</span>: <span class="hljs-built_in">string</span>;
+
+  <span class="hljs-comment">/** Настройки размера */</span>
+  size?: {
+    <span class="hljs-comment">/** Ширина плеера. */</span>
+    width?: <span class="hljs-built_in">number</span> | <span class="hljs-built_in">string</span>;
+    <span class="hljs-comment">/** Высота плеера. */</span>
+    height?: <span class="hljs-built_in">number</span> | <span class="hljs-built_in">string</span>;
+  };
+
+  <span class="hljs-comment">/** Настройки поведения */</span>
+  behaviour?: {
+    <span class="hljs-comment">/**
+     * Автоматический запуск плеера.
+     * Если не удалось начать воспроизведение со звуком, то плеер попытается начать воспроизведение с выключенным звуком.
+     *
+     * `viewable` - автоматический запуск при появлении плеера в области видимости на странице.
+     * Применимо когда плеер находится внизу страницы и до его появления нужно прокрутить страницу.
+     */</span>
+    autoPlay?: <span class="hljs-built_in">boolean</span> | <span class="hljs-string">&#x27;viewable&#x27;</span>;
+    <span class="hljs-comment">/** Ставить на паузу (если `true`) или сбрасывать на начальное состояние (если `reset`), если другой плеер на странице начал проигрывание. По умолчанию `true`. */</span>
+    autoPause?: <span class="hljs-built_in">boolean</span> | <span class="hljs-string">&#x27;reset&#x27;</span>;
+    <span class="hljs-comment">/** Выключить звук. */</span>
+    muted?: <span class="hljs-built_in">boolean</span>;
+    <span class="hljs-comment">/** Зацикленное видео. */</span>
+    loop?: <span class="hljs-built_in">boolean</span>;
+    <span class="hljs-comment">/** Воспроизводить видео на мобильных устройствах не переходя автоматически в полноэкранный режим. По умолчанию `true`. */</span>
+    playsInline?: <span class="hljs-built_in">boolean</span>;
+    <span class="hljs-comment">/**
+     * - `none`, `false` - не осуществлять предзагрузку видео (только постер, экономия ресурсов страницы). По умолчанию для мобильных устройств.
+     * - `metadata`, `true` - предварительно загружаются необходимые данные видео. По умолчанию (кроме мобильных устройств).
+     * - `auto` - предзагрузка на усмотрение браузера и видео драйвера.
+     */</span>
+    preload?: <span class="hljs-built_in">boolean</span> | <span class="hljs-string">&#x27;none&#x27;</span> | <span class="hljs-string">&#x27;metadata&#x27;</span> | <span class="hljs-string">&#x27;auto&#x27;</span>;
+    <span class="hljs-comment">/** Запоминать время воспроизведения, настройки субтитров и т.д. По умолчанию `true`. */</span>
+    <span class="hljs-variable language_">localStorage</span>?:
+      | <span class="hljs-built_in">boolean</span>
+      | {
+          <span class="hljs-comment">/**
+           * - `item` - запоминать для каждого ролика отдельно.
+           * - true | `global` - запоминать глобально, на все ролики.
+           * - false - не запоминать.
+           * По умолчанию `global`.
+           */</span>
+          quality?: <span class="hljs-string">&#x27;item&#x27;</span> | <span class="hljs-string">&#x27;global&#x27;</span> | <span class="hljs-built_in">boolean</span>;
+          <span class="hljs-comment">/** <span class="hljs-doctag">@experimental</span> Запоминать время. */</span>
+          time?: <span class="hljs-built_in">boolean</span>;
+          <span class="hljs-comment">/** <span class="hljs-doctag">@experimental</span> Запоминать язык субтитров. Аналогично `quality`. */</span>
+          textTrack?: <span class="hljs-string">&#x27;item&#x27;</span> | <span class="hljs-string">&#x27;global&#x27;</span> | <span class="hljs-built_in">boolean</span>;
+        };
+    <span class="hljs-comment">/**
+     * <span class="hljs-doctag">@experimental</span>
+     * В случае, если браузер не поддерживает полноэкранный режим для элементов можно указать запасной вариант.
+     * - `video` - полноэкранный режим видео элемента. Применяется в iOS.
+     * - `pseudo` - растянуть плеер в окне браузера поверх всех других элементов (псевдофулскрин).
+     * По умолчанию `video`.
+     */</span>
+    fullscreenFallback?: <span class="hljs-string">&#x27;video&#x27;</span> | <span class="hljs-string">&#x27;pseudo&#x27;</span>;
+  };
+
+  <span class="hljs-comment">/** Настройки UI */</span>
+  ui?: {
+    <span class="hljs-comment">/** Язык плеера. По умолчанию язык браузера или английский язык. */</span>
+    language?: <span class="hljs-string">&#x27;ru&#x27;</span> | <span class="hljs-string">&#x27;en&#x27;</span>;
+    <span class="hljs-comment">/** Показывать ли элементы управления плеером. По умолчанию `true`. */</span>
+    controls?: <span class="hljs-built_in">boolean</span>;
+    <span class="hljs-comment">/** Большая кнопка Play в центре плеера, по умолчанию `true`. */</span>
+    mainPlayButton?: <span class="hljs-built_in">boolean</span>;
+    <span class="hljs-comment">/** Показывать ли кнопку выбора скорости воспроизведения. */</span>
+    playbackRateButton?: <span class="hljs-built_in">boolean</span>;
+  };
+
+  <span class="hljs-comment">/** Настройки для плеера. */</span>
+  settings?: {
+    <span class="hljs-comment">/** Какой-либо пользовательский идентификатор. Используется для отправки метрик. */</span>
+    externalId?: <span class="hljs-built_in">string</span>;
+  };
+
+  <span class="hljs-comment">/**
+   * Настройки, относящиеся к ролику: заголовки, субтитры, drm и т.д.
+   * См. метод плеера `setPlaylistItemOptions`.
+   */</span>
+  <span class="hljs-attr">playlist</span>: <span class="hljs-title class_">PlaylistItemOptions</span>[];
+}
+</code></pre></li>
+<li><p><strong><code>getById(elementId: string): IframePlayerApi | undefined</code></strong> <a name="getById"></a></p>
+<p>Возвращает ранее созданный <a href="player-api">плеер</a> по id элемента.</p>
+</li>
+<li><p><strong><code>getAll(): IframePlayerApi[]</code></strong> <a name="getAll"></a></p>
+<p>Возвращает список созданных <a href="player-api">плееров</a>.</p>
+</li>
+</ul>
+<h2 id="см-так-же-3">См. так же</h2>
+<ul>
+<li><a href="./IframePlayerApi.html">Управление плеером</a></li>
+</ul>
+</body></html>

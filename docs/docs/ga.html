@@ -1,0 +1,32 @@
+<html>
+    <head>
+      <meta charset="utf-8" />
+      <link rel="stylesheet" href="main.css" />
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/sindresorhus/github-markdown-css/github-markdown-light.css">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/styles/github.min.css">
+    </head>
+    <body class="markdown-body"><h1 id="интеграция-с-google-analytics">Интеграция с Google Analytics</h1>
+<p>Поддерживается интеграция с:</p>
+<ul>
+<li><a href="#GASetup">Google Analytics 4</a><ul>
+<li>Google Tag (gtag.js)</li>
+<li><a href="#GTMSetup">Google Tag Manager (gtm.js)</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="google-analytics-4">Google Analytics 4<a name="GASetup" /></h2>
+<p>Интеграция с Google Analytics 4 через Google Tag (gtag.js) работает &quot;из коробки&quot;. Нужно лишь <a href="#PlayerSetup">настроить плеер</a>. Если плеер встраивается через <code>&lt;iframe&gt;</code>, то необходима <a href="#PlayerSetupIframe">дополнительная настройка</a>.</p>
+<h2 id="настройка-google-tag-manager">Настройка Google Tag Manager<a name="GTMSetup" /></h2>
+<p>Скачайте <a href="https://player.kinescope.io/latest/gtm/workspace.json">файл контейнера</a>, в нем содержатся необходимые настройки.<br>Затем импортируйте его в менеджере тегов. При импорте можно выбрать объединение настроек или перезапись. Для сохранения предыдущих настроек выбирайте объединение. Перезапись настроек удалит предыдущие настройки.</p>
+<p>Файл контейнера содержит преднастроенный тег:</p>
+<ul>
+<li><code>GA4 – Event – Kinescope Video</code> - для Google Analytics 4;</li>
+</ul>
+<blockquote>
+<p>Не забудьте опубликовать изменения.</p>
+</blockquote>
+<h1 id="настройка-плеера">Настройка плеера<a name="PlayerSetup" /></h1>
+<p>В настройках плеера к вашему видео, необходимо включить интеграцию с Google Analytics и указать <a href="https://support.google.com/analytics/answer/12270356?hl=ru">идентификатор потока данных</a>.</p>
+<h2 id="встраивание-плеера-через-iframe">Встраивание плеера через <code>&lt;iframe&gt;</code><a name="PlayerSetupIframe" /></h2>
+<p>На страницу с плеером подключите скрипт для интеграции с google аналитикой - https://player.kinescope.io/latest/iframe.ga.js, расположив его после подключения Google Analytics.</p>
+</body></html>

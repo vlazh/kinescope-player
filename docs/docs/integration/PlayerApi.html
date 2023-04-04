@@ -1,0 +1,116 @@
+<html>
+    <head>
+      <meta charset="utf-8" />
+      <link rel="stylesheet" href="../main.css" />
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/sindresorhus/github-markdown-css/github-markdown-light.css">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/styles/github.min.css">
+    </head>
+    <body class="markdown-body"><h1 id="управление-плеером-1">Управление плеером</h1>
+<p>Для управления плеером используется объект со следующими свойствами и методами:</p>
+<h3 id="свойства-2">Свойства</h3>
+<ul>
+<li><p><strong><code>Events: PlayerApi.Events</code></strong></p>
+<p><a href="#EventData">Перечисление событий плеера</a>.</p>
+</li>
+</ul>
+<h3 id="методы-2">Методы</h3>
+<ul>
+<li><p><strong><code>on(type: PlayerApi.Events, listener: Function): this</code></strong> <a name="on"></a></p>
+<p>Подписаться на <a href="#EventData">событие</a> плеера. См. <a href="#PlayerEvents">события плеера</a>.</p>
+</li>
+<li><p><strong><code>once(type: PlayerApi.Events, listener: Function): this</code></strong> <a name="once"></a></p>
+<p>Подписаться на <a href="#EventData">событие</a> плеера. <a href="#PlayerEvents">Обработчик события</a> будет вызван только один раз.</p>
+</li>
+<li><p><strong><code>off(type: PlayerApi.Events, listener: Function): this</code></strong> <a name="off"></a></p>
+<p>Отписаться от <a href="#EventData">события</a> плеера.</p>
+</li>
+<li><p><strong><code>isPaused(): Promise&lt;boolean&gt;</code></strong> <a name="isPaused"></a></p>
+<p>Проигрывание приостановлено?</p>
+</li>
+<li><p><strong><code>isEnded(): Promise&lt;boolean&gt;</code></strong> <a name="isEnded"></a></p>
+<p>Проигрывание дошло до конца?</p>
+</li>
+<li><p><strong><code>play(): Promise&lt;void&gt;</code></strong> <a name="play"></a></p>
+<p>Начать проигрывание.</p>
+</li>
+<li><p><strong><code>pause(): Promise&lt;void&gt;</code></strong> <a name="pause"></a></p>
+<p>Приостановить проигрывание.</p>
+</li>
+<li><p><strong><code>getCurrentTime(): Promise&lt;number&gt;</code></strong> <a name="getCurrentTime"></a></p>
+<p>Текущее время воспроизведения (в секундах).</p>
+</li>
+<li><p><strong><code>getDuration(): Promise&lt;number&gt;</code></strong> <a name="getDuration"></a></p>
+<p>Продолжительность ролика (в секундах).</p>
+</li>
+<li><p><strong><code>setPlaylistItemOptions(options: PlaylistItemOptions): Promise&lt;void&gt;</code></strong> <a name="setPlaylistItemOptions"></a></p>
+<p>Установить параметры для текущего ролика.</p>
+<pre><code class="hljs language-ts"><span class="hljs-keyword">interface</span> <span class="hljs-title class_">PlaylistItemOptions</span> {
+  <span class="hljs-comment">/** <span class="hljs-doctag">@experimental</span> Закладки, привязанные ко времени. */</span>
+  bookmarks?: {
+    <span class="hljs-attr">id</span>: <span class="hljs-built_in">string</span>;
+    <span class="hljs-comment">/** Время в секундах. */</span>
+    <span class="hljs-attr">time</span>: <span class="hljs-built_in">number</span>;
+  }[];
+}
+</code></pre></li>
+<li><p><strong><code>setUIDisabled(disabled: boolean): Promise&lt;void&gt;</code></strong> <a name="setUIDisabled"></a></p>
+<p>Disable/enable the player UI and shortcuts. <code>@experimental</code></p>
+</li>
+</ul>
+<h2 id="события-плеера-1">События плеера<a name="PlayerEvents"></a></h2>
+<p>В каждый обработчик события передается <a href="#EventObject">объект события</a> с <a href="#EventData">данными</a> о нем.</p>
+<h3 id="объект-события-1">Объект события<a name="EventObject"></a></h3>
+<pre><code class="hljs language-ts">{
+  <span class="hljs-comment">/** Тип события */</span>
+  <span class="hljs-attr">type</span>: <span class="hljs-title class_">PlayerApi</span>.<span class="hljs-property">Events</span>;
+  <span class="hljs-comment">/** Данные события, зависят от типа события, могут отсутствовать */</span>
+  <span class="hljs-attr">data</span>: <span class="hljs-title class_">Data</span>;
+  <span class="hljs-comment">/** Объект управления плеером, соответствующий событию */</span>
+  <span class="hljs-attr">target</span>: <span class="hljs-title class_">PlayerApi</span>;
+}
+</code></pre><h3 id="перечисление-событий-1">Перечисление событий<a name="EventData"></a></h3>
+<ul>
+<li><p><strong><code>PlayerApi.Events.Ready</code></strong> <a name="Events.Ready"></a> - Плеер загрузил все необходимые данные и готов к воспроизведению.<br>При выключенной предзагрузке (preload=&#39;none&#39;) это событие сработает при начале воспроизведения.</p>
+<pre><code class="hljs language-ts">{
+  <span class="hljs-attr">currentTime</span>: <span class="hljs-built_in">number</span>;
+  <span class="hljs-attr">duration</span>: <span class="hljs-built_in">number</span>;
+}
+</code></pre></li>
+<li><p><strong><code>PlayerApi.Events.CurrentTrackChanged</code></strong> <a name="Events.CurrentTrackChanged"></a> - Смена текущего трека. <code>@experimental</code></p>
+<pre><code class="hljs language-ts">{
+  <span class="hljs-attr">item</span>: { id?: <span class="hljs-built_in">string</span> }
+}
+</code></pre></li>
+<li><p><strong><code>PlayerApi.Events.SizeChanged</code></strong> <a name="Events.SizeChanged"></a> - Размер плеера изменился. <code>@experimental</code></p>
+<pre><code class="hljs language-ts">{
+  <span class="hljs-attr">width</span>: <span class="hljs-built_in">number</span>;
+  <span class="hljs-attr">height</span>: <span class="hljs-built_in">number</span>;
+}
+</code></pre></li>
+<li><p><strong><code>PlayerApi.Events.Play</code></strong> <a name="Events.Play"></a> - Запуск воспроизведения.</p>
+<p>У события нет данных.</p>
+</li>
+<li><p><strong><code>PlayerApi.Events.Pause</code></strong> <a name="Events.Pause"></a> - Пауза.</p>
+<p>У события нет данных.</p>
+</li>
+<li><p><strong><code>PlayerApi.Events.Ended</code></strong> <a name="Events.Ended"></a> - Окончание воспроизведения.</p>
+<p>У события нет данных.</p>
+</li>
+<li><p><strong><code>PlayerApi.Events.TimeUpdate</code></strong> <a name="Events.TimeUpdate"></a> - Изменение текущего времени воспроизведения.</p>
+<pre><code class="hljs language-ts">{
+  <span class="hljs-attr">currentTime</span>: <span class="hljs-built_in">number</span>;
+}
+</code></pre></li>
+<li><p><strong><code>PlayerApi.Events.FullscreenChange</code></strong> <a name="Events.FullscreenChange"></a> - Изменение полноэкранного режима.</p>
+<pre><code class="hljs language-ts">{
+  <span class="hljs-attr">isFullscreen</span>: <span class="hljs-built_in">boolean</span>;
+}
+</code></pre></li>
+<li><p><strong><code>PlayerApi.Events.CallBookmark</code></strong> <a name="Events.CallBookmark"></a> - Нажатие на закладку. <code>@experimental</code></p>
+<pre><code class="hljs language-ts">{
+  <span class="hljs-attr">id</span>: <span class="hljs-built_in">string</span>;
+  <span class="hljs-attr">time</span>: <span class="hljs-built_in">number</span>;
+}
+</code></pre></li>
+</ul>
+</body></html>
